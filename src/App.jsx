@@ -3,13 +3,19 @@ import useDataCollect from "./hooks/useDataCollect";
 import DataShow from "./DataShow";
 
 const App = () => {
+  //all data
   const [data, isLoading] = useDataCollect();
+
+  //states declare
   const [postIdFilter, setPostIdFilter] = useState("");
   const [postIdRightSideFilter, setPostIdRightSideFilter] = useState([]);
+
+  //If data fail to load
   if (isLoading) {
     return <span className="text-center">Loading...</span>;
   }
 
+  //2.1. Display the first comment for each post as if it were the post itself on the left side.
   const getFirstComments = {};
   data?.map((getFirstCommentByPostId) => {
     const postId = getFirstCommentByPostId?.postId;
@@ -18,11 +24,13 @@ const App = () => {
     }
   });
 
+  //2.2. Implement a filter that allows users to enter a postId and filter the left side based on this input.
   const filteredComments = data.filter(
     (comment) =>
       postIdFilter === "" || comment.postId === parseInt(postIdFilter)
   );
 
+  //3.1. Clicking on a "post" on the left side should display its associated comments on the right side.
   const handleComments = (id) => {
     const filterForReightSide = data?.filter((datas) => datas.postId === id);
     setPostIdRightSideFilter(filterForReightSide);
@@ -32,6 +40,7 @@ const App = () => {
     <div className="bg-gray-900 min-h-full">
       <section className="relative">
         <div className="relative z-10 max-w-screen-xl mx-auto px-4 py-28 md:px-8 grid grid-cols-2 gap-5">
+          {/* datas left side */}
           <div className="text-white  ">
             <input
               type="number"
@@ -58,6 +67,7 @@ const App = () => {
                   ))}
             </div>
           </div>
+          {/* datas right side */}
           <div className="text-white ">
             <h2 className="title text-3xl font-bold">
               Total Filter Comments: {postIdRightSideFilter.length}

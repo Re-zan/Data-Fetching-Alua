@@ -1,7 +1,7 @@
 const DataShow = ({ firstComment, handleComments }) => {
   return (
     <div
-      className="border my-6 p-4 space-y-2 "
+      className="border m-4 p-4 space-y-2 "
       onClick={() => handleComments(firstComment.postId)}
     >
       <h2>
